@@ -14,10 +14,15 @@ const useFetchRecords = (isManual = false) => {
   }, []);
 
   const fetchData = async () => {
-    setLoading(true);
-    const dataFetch = await axios.get('records/');
-    recordCtx.setRecords(dataFetch);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const dataFetch = await axios.get('records/');
+      recordCtx.setRecords(dataFetch);
+      setLoading(false);
+    } catch (error) {
+      setError(console.log('error'));
+    }
+    
   }
 
 return { data: recordCtx.records, loading, error, fetchData };

@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useDeleteRecords from '../hooks/useDeleteRecords';
 import PhoneCard from './PhoneCard';
 import InputComponent from './InputComponent';
+import { AuthContext } from "../providers/AuthContext";
+
 
 const RecordList = (props) => {
+  const authCtx = useContext(AuthContext);
   const { delRecord, data, loading, error } = useDeleteRecords();
   const [editIndex, setEditIndex] = useState(null);
   
@@ -16,7 +19,12 @@ const RecordList = (props) => {
     delRecord(index);
   };
 
+  const handlerLogout = () => {
+    authCtx.doLogout();
+  }
+
   return (
+    <>
     <div>
       {props.recordList?.data &&
         props.recordList.data.map((record, index) => (<>
@@ -35,6 +43,8 @@ const RecordList = (props) => {
         </>
         ))}
     </div>
+    <button type="submit" onClick={handlerLogout}>Logout</button>
+    </>
   );
 };
 
